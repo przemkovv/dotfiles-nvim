@@ -1,21 +1,21 @@
 
-call plug#begin('~/.config/nvim/plugged')
+call plug#begin(stdpath('config'). '/plugged')
 Plug 'chriskempson/base16-vim'
 Plug 'neovim/nvim-lsp'
 Plug 'neovim/nvim-lspconfig'
 "Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 " File navigation {{{
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"
+if has("win32")
+	Plug 'junegunn/fzf', { 'dir': 'h:/dev/tools/fzf', 'do': './install --all' }
+else
+	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+endif
 Plug 'junegunn/fzf.vim'
 Plug 'vim-scripts/FSwitch'
 " }}}
 
-" File navigation {{{
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'vim-scripts/FSwitch'
-" }}}
 
 let g:nremap = {'<p': '', '>p': '', '<P': '', '>P':''}
 Plug 'tpope/vim-unimpaired'
@@ -141,7 +141,7 @@ nnoremap <silent> <C-L> :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr>
 
 nnoremap <Space>= :keepjumps normal mzgg=Gg`zzz<CR>
 command! -bang -nargs=? -complete=dir Files
-      \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+			\ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 nnoremap <Space>? :Helptags<cr>
 nnoremap <Space>f :Files<cr>
 nnoremap <Space>F :GFiles<cr>
@@ -195,23 +195,23 @@ augroup END
 " nvim-lsp {{{
 
 if has("nvim")
-  " This is optional, but you may find it useful
-  autocmd CompleteDone * pclose
-"lua require 'lspconfig'.
-  "lua require('lsp_settings').cpp()
-  "lua require('lsp_settings').rust()
-  "lua require('lsp_settings').python()
-  "lua require('lsp_settings').viml()
+	" This is optional, but you may find it useful
+	autocmd CompleteDone * pclose
+	"lua require 'lspconfig'.
+	"lua require('lsp_settings').cpp()
+	"lua require('lsp_settings').rust()
+	"lua require('lsp_settings').python()
+	"lua require('lsp_settings').viml()
 
-  nnoremap <silent> <space>dc    <cmd>lua vim.lsp.buf.declaration()<CR>
-  nnoremap <silent> <space>gd    <cmd>lua vim.lsp.buf.definition()<CR>
-  nnoremap <silent> gd           <cmd>lua vim.lsp.buf.definition()<CR>
-  nnoremap <silent> K            <cmd>lua vim.lsp.buf.hover()<CR>
-  nnoremap <silent> <space>gi    <cmd>lua vim.lsp.buf.implementation()<CR>
-  nnoremap <silent> <space>k     <cmd>lua vim.lsp.buf.signature_help()<CR>
-  nnoremap <silent> <space>gt    <cmd>lua vim.lsp.buf.type_definition()<CR>
-  nnoremap <silent> <space>gr    <cmd>lua vim.lsp.buf.references()<CR>
-  nnoremap <silent> <space>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+	nnoremap <silent> <space>dc    <cmd>lua vim.lsp.buf.declaration()<CR>
+	nnoremap <silent> <space>gd    <cmd>lua vim.lsp.buf.definition()<CR>
+	nnoremap <silent> gd           <cmd>lua vim.lsp.buf.definition()<CR>
+	nnoremap <silent> K            <cmd>lua vim.lsp.buf.hover()<CR>
+	nnoremap <silent> <space>gi    <cmd>lua vim.lsp.buf.implementation()<CR>
+	nnoremap <silent> <space>k     <cmd>lua vim.lsp.buf.signature_help()<CR>
+	nnoremap <silent> <space>gt    <cmd>lua vim.lsp.buf.type_definition()<CR>
+	nnoremap <silent> <space>gr    <cmd>lua vim.lsp.buf.references()<CR>
+	nnoremap <silent> <space>g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 endif
 
 " }}}
