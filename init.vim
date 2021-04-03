@@ -1,5 +1,6 @@
 
 call plug#begin(stdpath('config'). '/plugged')
+Plug 'romainl/apprentice'
 Plug 'chriskempson/base16-vim'
 Plug 'neovim/nvim-lsp'
 Plug 'neovim/nvim-lspconfig'
@@ -69,14 +70,40 @@ call plug#end()
 
 silent! colorscheme evening
 silent! colorscheme base16-chalk
+silent! colorscheme apprentice
 
 " {{{
+" Highlight VCS conflict markers
+match ErrorMsg '^\(<\|=\|>\)\{7\}\([^=].\+\)\?$'
+
+set tabstop=4
+set shiftwidth=2
+set expandtab
+set softtabstop=2
+
+set number
+set numberwidth=5
+set relativenumber
+set nocursorline
+
 set showcmd		" Show (partial) command in status line.
 set showmatch		" Show matching brackets.
 set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
 set incsearch		" Incremental search
 
+" Number line settings {{{
+" --------------------------------------------------------------------------------
+augroup NumberLines
+  autocmd!
+  autocmd FocusLost * set norelativenumber
+  autocmd WinLeave * set norelativenumber
+  autocmd InsertEnter * set norelativenumber
+
+  autocmd FocusGained * set relativenumber
+  autocmd WinEnter * set relativenumber
+  autocmd InsertLeave * set relativenumber
+augroup END
 if exists('&inccommand')
 	set inccommand=nosplit
 endif
